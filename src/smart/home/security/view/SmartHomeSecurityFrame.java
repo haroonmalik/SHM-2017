@@ -5,13 +5,8 @@
  */
 package smart.home.security.view;
 
+import java.awt.Component;
 import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 /**
  *
@@ -23,16 +18,24 @@ public class SmartHomeSecurityFrame extends javax.swing.JFrame {
      * Creates new form SmartHomeSecurityFrame
      */
     public SmartHomeSecurityFrame() {
-        initComponents();
-
-        JPanel mainPanel = new MainPanel();
-
-//        this.setLayout(new GridLayout(1, 1));
-        this.add(mainPanel);
-
-        this.pack();
-        this.setVisible(true);
-//        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        initComponents();   
+        showMainPanel();
+    }
+    
+    public void replaceFramePanel(Component component) {
+        getContentPane().removeAll();       
+        setLayout(new GridLayout(1, 1));
+        add(component);
+        
+        getContentPane().repaint();
+        pack();
+    }
+    
+    /**
+     * Display the main panel on the frame.
+     */
+    private void showMainPanel() {
+        replaceFramePanel(new MainPanel());        
     }
 
     /**
@@ -45,21 +48,22 @@ public class SmartHomeSecurityFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(400, 300));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 379, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 327, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+     
     /**
      * @param args the command line arguments
      */
@@ -90,7 +94,7 @@ public class SmartHomeSecurityFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SmartHomeSecurityFrame();
+                new SmartHomeSecurityFrame().setVisible(true);
             }
         });
     }
