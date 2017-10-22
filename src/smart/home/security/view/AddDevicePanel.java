@@ -5,14 +5,20 @@
  */
 package smart.home.security.view;
 
+import java.util.Locale;
+import java.util.Scanner;
+import javafx.beans.binding.Bindings;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import sun.invoke.empty.Empty;
 
 /**
  *
  * @author chana
  */
 public class AddDevicePanel extends javax.swing.JPanel {
-       /**
+
+    /**
      * Creates new form AddDevicePanel
      */
     public AddDevicePanel() {
@@ -31,9 +37,11 @@ public class AddDevicePanel extends javax.swing.JPanel {
         saveButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         nameTextField = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        macAddressTextfield = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+
+        setBorder(javax.swing.BorderFactory.createTitledBorder("Add Device"));
 
         saveButton.setText("Save");
         saveButton.setToolTipText("Click to save the device");
@@ -58,7 +66,7 @@ public class AddDevicePanel extends javax.swing.JPanel {
             }
         });
 
-        jTextField2.setToolTipText(" mac-address of the device");
+        macAddressTextfield.setToolTipText(" mac-address of the device");
 
         jLabel1.setText("Name");
         jLabel1.setToolTipText("");
@@ -75,31 +83,30 @@ public class AddDevicePanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField2)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addComponent(nameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                    .addComponent(macAddressTextfield))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(203, Short.MAX_VALUE)
                 .addComponent(saveButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cancelButton)
-                .addContainerGap())
+                .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(macAddressTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton)
                     .addComponent(saveButton))
@@ -110,17 +117,24 @@ public class AddDevicePanel extends javax.swing.JPanel {
     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
         return (SmartHomeSecurityFrame) SwingUtilities.getWindowAncestor(this);
     }
-    
+
     private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
-           // TODO add your handling code here:           
+        
     }//GEN-LAST:event_nameTextFieldActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        // TODO add your handling code here:
+        if (nameTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Enter a valid device name!");
+        } else if (macAddressTextfield.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Enter a valid device address!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Device saved");
+            getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
+        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());      
+        getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
     }//GEN-LAST:event_cancelButtonActionPerformed
 
 
@@ -128,7 +142,7 @@ public class AddDevicePanel extends javax.swing.JPanel {
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField macAddressTextfield;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
