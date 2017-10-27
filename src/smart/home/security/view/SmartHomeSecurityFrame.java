@@ -20,13 +20,16 @@ public class SmartHomeSecurityFrame extends javax.swing.JFrame {
     public SmartHomeSecurityFrame() {
         initComponents();   
         showMainPanel();
-    }
-    
+    } 
+    /**
+     * Replaces the JFrame with JPanel
+     * @param component 
+     */
     public void replaceFramePanel(Component component) {
         getContentPane().removeAll();       
         setLayout(new GridLayout(1, 1));
         add(component);
-        
+       
         getContentPane().repaint();
         pack();
     }

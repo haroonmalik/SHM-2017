@@ -5,7 +5,12 @@
  */
 package smart.home.security.view;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import smart.home.security.model.Device;
+import smart.home.security.model.Devices;
 
 /**
  *
@@ -18,6 +23,12 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
      */
     public RemoveDevicePanel() {
         initComponents();
+        
+        DefaultListModel defaultListModel = new DefaultListModel();
+        for (Device device : Devices.getInstance().getDevices()) {
+            defaultListModel.addElement(device.getName() + " | " + device.getAddress());
+        }               
+        deviceList.setModel(defaultListModel);
     }
 
     /**
@@ -29,23 +40,37 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        deviceList = new javax.swing.JList<>();
+        removeButton = new javax.swing.JButton();
         cancelRemoveButton = new javax.swing.JButton();
-
-        setBorder(javax.swing.BorderFactory.createTitledBorder("Remove Device "));
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jList1.setToolTipText("");
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane2.setViewportView(jList1);
 
-        jButton1.setText("Remove");
-        jButton1.setToolTipText("Are you sure");
+        setBorder(javax.swing.BorderFactory.createTitledBorder("Remove Device "));
+
+        deviceList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        deviceList.setToolTipText("");
+        jScrollPane1.setViewportView(deviceList);
+
+        removeButton.setText("Remove");
+        removeButton.setToolTipText("Are you sure");
+        removeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeButtonActionPerformed(evt);
+            }
+        });
 
         cancelRemoveButton.setText("Cancel");
         cancelRemoveButton.setToolTipText("");
@@ -61,25 +86,25 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(removeButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cancelRemoveButton)
-                .addGap(15, 15, 15))
+                .addGap(34, 34, 34))
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cancelRemoveButton)
-                    .addComponent(jButton1))
-                .addContainerGap(21, Short.MAX_VALUE))
+                    .addComponent(removeButton)
+                    .addComponent(cancelRemoveButton))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
@@ -87,14 +112,26 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
     }
     private void cancelRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelRemoveButtonActionPerformed
         // TODO add your handling code here:
-         getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());  
+        getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
     }//GEN-LAST:event_cancelRemoveButtonActionPerformed
+
+    private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
+        int selectedIndex = deviceList.getSelectedIndex();
+        if (selectedIndex >= 0) {
+            Device device = Devices.getInstance().getDevices().get(selectedIndex);
+            Devices.getInstance().removeDevice(device);
+            JOptionPane.showMessageDialog(this, "Device removed");
+            getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
+        }        
+    }//GEN-LAST:event_removeButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelRemoveButton;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JList<String> deviceList;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton removeButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -8,8 +8,12 @@ package smart.home.security.view;
 import java.util.Locale;
 import java.util.Scanner;
 import javafx.beans.binding.Bindings;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import smart.home.security.model.Device;
+import smart.home.security.model.Devices;
 import sun.invoke.empty.Empty;
 
 /**
@@ -80,9 +84,9 @@ public class AddDevicePanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(nameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
@@ -113,29 +117,39 @@ public class AddDevicePanel extends javax.swing.JPanel {
                 .addGap(31, 31, 31))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    // Returns from add device panel to smart home security frame.
     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
         return (SmartHomeSecurityFrame) SwingUtilities.getWindowAncestor(this);
     }
-
-    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
-        
-    }//GEN-LAST:event_nameTextFieldActionPerformed
-
+    /**
+     * Provides Validation to the name field and address.
+     * @param evt 
+     */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        if (nameTextField.getText().isEmpty()) {
+        String name = nameTextField.getText();
+        String address = macAddressTextfield.getText();
+        if (name.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Enter a valid device name!");
-        } else if (macAddressTextfield.getText().isEmpty()) {
+        } else if (address.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Enter a valid device address!");
         } else {
+            Device device = new Device(name, address);
+            Devices.getInstance().addDevice(device);
             JOptionPane.showMessageDialog(this, "Device saved");
             getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
         }
     }//GEN-LAST:event_saveButtonActionPerformed
-
+    /**
+     *  Redirects to the smart home security page
+     * @param evt 
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameTextFieldActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
