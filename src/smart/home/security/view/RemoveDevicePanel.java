@@ -23,11 +23,11 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
      */
     public RemoveDevicePanel() {
         initComponents();
-        
+
         DefaultListModel defaultListModel = new DefaultListModel();
         for (Device device : Devices.getInstance().getDevices()) {
             defaultListModel.addElement(device.getName() + " | " + device.getAddress());
-        }               
+        }
         deviceList.setModel(defaultListModel);
     }
 
@@ -77,7 +77,7 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
                 removeButtonActionPerformed(evt);
             }
         });
-        add(removeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 230, -1, -1));
+        add(removeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, -1, -1));
 
         cancelRemoveButton.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         cancelRemoveButton.setText("Cancel");
@@ -87,7 +87,7 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
                 cancelRemoveButtonActionPerformed(evt);
             }
         });
-        add(cancelRemoveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, -1, -1));
+        add(cancelRemoveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(311, 230, 80, -1));
     }// </editor-fold>//GEN-END:initComponents
     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
         return (SmartHomeSecurityFrame) SwingUtilities.getWindowAncestor(this);
@@ -104,7 +104,7 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
             Devices.getInstance().removeDevice(device);
             JOptionPane.showMessageDialog(this, "Device removed");
             getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
-        }        
+        }
     }//GEN-LAST:event_removeButtonActionPerformed
 
 

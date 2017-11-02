@@ -6,6 +6,7 @@
 package smart.home.security.view;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import smart.home.security.model.Device;
 import smart.home.security.model.Devices;
@@ -21,12 +22,13 @@ public class EnablePanel extends javax.swing.JPanel{
      */
     public EnablePanel() {
         initComponents();
-//       DefaultListModel defaultListModel = new DefaultListModel();
-//        for (Device device : Devices.getInstance().getDevices()) {
-//            defaultListModel.addElement(device.getName() + " | " + device.getAddress());
-//        }               
-//        enableList.setModel(defaultListModel);
-//        System.out.println(enableList);
+        DefaultListModel defaultListModel = new DefaultListModel();
+        for (Device device : Devices.getInstance().getDevices()) {
+            if (!device.isEnabled()) {
+                defaultListModel.addElement(device.getName() + " || " + device.getAddress());                
+            }            
+        }
+        enableList.setModel(defaultListModel);        
     }
 
     /**
@@ -50,6 +52,15 @@ public class EnablePanel extends javax.swing.JPanel{
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        enableList.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                enableListAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
         });
         jScrollPane1.setViewportView(enableList);
 
@@ -96,13 +107,22 @@ public class EnablePanel extends javax.swing.JPanel{
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        // TODO add your handling code here:
         getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void enableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enableButtonActionPerformed
-        // TODO add your handling code here:
+        int selectedIndex = enableList.getSelectedIndex();
+        if (selectedIndex >= 0) {
+            Device device = Devices.getInstance().getDevices().get(selectedIndex);
+            Devices.getInstance().enableDevice(device);
+            JOptionPane.showMessageDialog(this, "Device enable");
+            getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
+        }
     }//GEN-LAST:event_enableButtonActionPerformed
+
+    private void enableListAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_enableListAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_enableListAncestorAdded
     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
         return (SmartHomeSecurityFrame) SwingUtilities.getWindowAncestor(this);
     }

@@ -5,6 +5,8 @@
  */
 package smart.home.security.view;
 
+import java.awt.jButton;
+
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import smart.home.security.model.Device;

@@ -5,11 +5,9 @@
  */
 package smart.home.security.view;
 
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import smart.home.security.model.Device;
+import smart.home.security.model.Devices;
 
 /**
  *
@@ -35,7 +33,7 @@ public class MainPanel extends javax.swing.JPanel {
 
         addButton = new javax.swing.JButton();
         removeButton = new javax.swing.JButton();
-        armSystem = new javax.swing.JButton();
+        armButton = new javax.swing.JButton();
         disarmButton = new javax.swing.JButton();
         enableButton = new javax.swing.JButton();
         disableButton = new javax.swing.JButton();
@@ -64,12 +62,12 @@ public class MainPanel extends javax.swing.JPanel {
             }
         });
 
-        armSystem.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
-        armSystem.setText("Arm System");
-        armSystem.setToolTipText("Arm system");
-        armSystem.addActionListener(new java.awt.event.ActionListener() {
+        armButton.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
+        armButton.setText("Arm System");
+        armButton.setToolTipText("Arm system");
+        armButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                armSystemActionPerformed(evt);
+                armButtonActionPerformed(evt);
             }
         });
 
@@ -115,7 +113,7 @@ public class MainPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(armSystem, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(armButton, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(1, 1, 1)
                         .addComponent(enableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -124,7 +122,7 @@ public class MainPanel extends javax.swing.JPanel {
                         .addComponent(disarmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(disableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,7 +132,7 @@ public class MainPanel extends javax.swing.JPanel {
                 .addGap(130, 130, 130)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addButton)
-                    .addComponent(armSystem)
+                    .addComponent(armButton)
                     .addComponent(enableButton))
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,13 +158,18 @@ public class MainPanel extends javax.swing.JPanel {
         getSmartHomeSecurityFrame().replaceFramePanel(removeDevicePanel);
     }//GEN-LAST:event_removeButtonActionPerformed
 
-    private void armSystemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_armSystemActionPerformed
-        // TODO add your handling code here:
+    private void armButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_armButtonActionPerformed
+        Devices.getInstance().armDevices();
         
-    }//GEN-LAST:event_armSystemActionPerformed
+        armButton.setEnabled(false);
+        disarmButton.setEnabled(true);
+    }//GEN-LAST:event_armButtonActionPerformed
 
     private void disarmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disarmButtonActionPerformed
-        // TODO add your handling code here:
+        Devices.getInstance().disarmDevices();
+        
+        armButton.setEnabled(true);
+        disarmButton.setEnabled(false);
     }//GEN-LAST:event_disarmButtonActionPerformed
 
     private void enableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enableButtonActionPerformed
@@ -184,7 +187,7 @@ public class MainPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
-    private javax.swing.JButton armSystem;
+    private javax.swing.JButton armButton;
     private javax.swing.JButton disableButton;
     private javax.swing.JButton disarmButton;
     private javax.swing.JButton enableButton;

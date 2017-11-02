@@ -5,8 +5,13 @@
  */
 package smart.home.security.view;
 
+import java.awt.AWTEvent;
+import java.awt.event.ActionListener;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.event.AncestorListener;
+import javax.swing.plaf.basic.BasicOptionPaneUI;
 import smart.home.security.model.Device;
 import smart.home.security.model.Devices;
 
@@ -14,7 +19,7 @@ import smart.home.security.model.Devices;
  *
  * @author chana
  */
-public class DisablePanel extends javax.swing.JPanel{
+public class DisablePanel extends javax.swing.JPanel {
 
     /**
      * Creates new form DisablePanel
@@ -23,11 +28,12 @@ public class DisablePanel extends javax.swing.JPanel{
         initComponents();
         DefaultListModel defaultListModel = new DefaultListModel();
         for (Device device : Devices.getInstance().getDevices()) {
-            defaultListModel.addElement(device.getName() + " || " + device.getAddress());
-        }               
-        disableList.setModel(defaultListModel);
-        System.out.println(disableList);
-}
+            if (device.isEnabled()) {
+                defaultListModel.addElement(device.getName() + " || " + device.getAddress());                
+            }            
+        }
+        disableList.setModel(defaultListModel);        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,7 +49,7 @@ public class DisablePanel extends javax.swing.JPanel{
         disableButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder("DISABLE DEVICE PANEL"));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "DISABLE DEVICE PANEL", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 13))); // NOI18N
         setPreferredSize(new java.awt.Dimension(408, 309));
 
         disableList.setModel(new javax.swing.AbstractListModel<String>() {
@@ -97,8 +103,15 @@ public class DisablePanel extends javax.swing.JPanel{
 
     private void disableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disableButtonActionPerformed
         // TODO add your handling code here:
- 
-       
+        //when clicked on disable button remove the device from disable panel and 
+        // show it in enable panel(and the device needs to be disable in enable panel).
+        int selectedIndex = disableList.getSelectedIndex();
+        if (selectedIndex >= 0) {
+            Device device = Devices.getInstance().getDevices().get(selectedIndex);
+            Devices.getInstance().disableDevice(device);
+            JOptionPane.showMessageDialog(this, "Device disable");
+            getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
+        }
     }//GEN-LAST:event_disableButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -109,7 +122,7 @@ public class DisablePanel extends javax.swing.JPanel{
     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
         return (SmartHomeSecurityFrame) SwingUtilities.getWindowAncestor(this);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton disableButton;

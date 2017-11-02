@@ -43,10 +43,28 @@ public class Devices {
             devices.remove(device);
         }
     }
+
     public void enableDevice(Device device) {
-        
+        if (device != null) {
+            device.enable();
+        }
     }
+
     public void disableDevice(Device device) {
+        if (device != null) {
+            device.disable();
+        }
+    }
     
+    public void armDevices() {
+        for (Device device : devices) {
+            device.arm();
+        }
+    }
+    
+    public void disarmDevices() {
+        for (Device device : devices) {
+            device.disarm();
+        }
     }
 }
