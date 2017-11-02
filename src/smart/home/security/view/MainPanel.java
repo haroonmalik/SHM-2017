@@ -5,6 +5,7 @@
  */
 package smart.home.security.view;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -38,11 +39,14 @@ public class MainPanel extends javax.swing.JPanel {
         disarmButton = new javax.swing.JButton();
         enableButton = new javax.swing.JButton();
         disableButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        statusLabel = new javax.swing.JLabel();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder("Smart Home Security"));
-        setPreferredSize(new java.awt.Dimension(700, 700));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SMART HOME SECURITY", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 14))); // NOI18N
+        setForeground(new java.awt.Color(0, 0, 0));
+        setToolTipText("");
+        setPreferredSize(new java.awt.Dimension(408, 309));
 
+        addButton.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         addButton.setText("Add Device");
         addButton.setToolTipText("Add a device");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -51,6 +55,7 @@ public class MainPanel extends javax.swing.JPanel {
             }
         });
 
+        removeButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         removeButton.setText("Remove Device");
         removeButton.setToolTipText("Remove a device");
         removeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -59,6 +64,7 @@ public class MainPanel extends javax.swing.JPanel {
             }
         });
 
+        armSystem.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         armSystem.setText("Arm System");
         armSystem.setToolTipText("Arm system");
         armSystem.addActionListener(new java.awt.event.ActionListener() {
@@ -67,6 +73,7 @@ public class MainPanel extends javax.swing.JPanel {
             }
         });
 
+        disarmButton.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         disarmButton.setText("Disarm System");
         disarmButton.setToolTipText("Disarm system");
         disarmButton.addActionListener(new java.awt.event.ActionListener() {
@@ -75,6 +82,7 @@ public class MainPanel extends javax.swing.JPanel {
             }
         });
 
+        enableButton.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         enableButton.setText("Enable Device");
         enableButton.setToolTipText("Enable device");
         enableButton.addActionListener(new java.awt.event.ActionListener() {
@@ -83,6 +91,7 @@ public class MainPanel extends javax.swing.JPanel {
             }
         });
 
+        disableButton.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         disableButton.setText("Disable Device");
         disableButton.setToolTipText("Disable a device");
         disableButton.addActionListener(new java.awt.event.ActionListener() {
@@ -91,59 +100,55 @@ public class MainPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setText("Status");
+        statusLabel.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
+        statusLabel.setText("Status");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(removeButton)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(addButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(31, 31, 31)
+                        .addComponent(statusLabel))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(disarmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(disableButton)
-                        .addGap(113, 113, 113))
-                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
                         .addComponent(armSystem, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(enableButton)
-                        .addGap(115, 115, 115))))
+                        .addGap(1, 1, 1)
+                        .addComponent(enableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(removeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(disarmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(disableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 323, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(statusLabel)
+                .addGap(130, 130, 130)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addButton)
                     .addComponent(armSystem)
                     .addComponent(enableButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(removeButton)
                     .addComponent(disarmButton)
                     .addComponent(disableButton))
-                .addGap(34, 34, 34))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    
     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
         return (SmartHomeSecurityFrame) SwingUtilities.getWindowAncestor(this);
     }
-    
+
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         AddDevicePanel addDevicePanel = new AddDevicePanel();
         getSmartHomeSecurityFrame().replaceFramePanel(addDevicePanel);
@@ -152,11 +157,12 @@ public class MainPanel extends javax.swing.JPanel {
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
         // TODO add your handling code here:
         RemoveDevicePanel removeDevicePanel = new RemoveDevicePanel();
-            getSmartHomeSecurityFrame().replaceFramePanel(removeDevicePanel);
+        getSmartHomeSecurityFrame().replaceFramePanel(removeDevicePanel);
     }//GEN-LAST:event_removeButtonActionPerformed
 
     private void armSystemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_armSystemActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_armSystemActionPerformed
 
     private void disarmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disarmButtonActionPerformed
@@ -165,10 +171,14 @@ public class MainPanel extends javax.swing.JPanel {
 
     private void enableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enableButtonActionPerformed
         // TODO add your handling code here:
+        EnablePanel enablePanel = new EnablePanel();
+        getSmartHomeSecurityFrame().replaceFramePanel(enablePanel);                                       
     }//GEN-LAST:event_enableButtonActionPerformed
 
     private void disableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disableButtonActionPerformed
         // TODO add your handling code here:
+        DisablePanel disablePanel = new DisablePanel();
+        getSmartHomeSecurityFrame().replaceFramePanel(disablePanel);             
     }//GEN-LAST:event_disableButtonActionPerformed
 
 
@@ -178,7 +188,7 @@ public class MainPanel extends javax.swing.JPanel {
     private javax.swing.JButton disableButton;
     private javax.swing.JButton disarmButton;
     private javax.swing.JButton enableButton;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JButton removeButton;
+    public javax.swing.JLabel statusLabel;
     // End of variables declaration//GEN-END:variables
 }

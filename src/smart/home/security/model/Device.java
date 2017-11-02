@@ -4,19 +4,24 @@
  * and open the template in the editor.
  */
 package smart.home.security.model;
+import java.awt.Button;
+import smart.home.security.model.Device;
+import smart.home.security.model.Devices;
 
 /**
  *
  * @author chana
  */
-public class Device {
+public class Device   {
 
     private String name;
     private String address;
 
+
     public Device(String name, String address) {
         this.name = name;
         this.address = address;
+        
     }
 
     public String getName() {

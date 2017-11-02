@@ -5,16 +5,10 @@
  */
 package smart.home.security.view;
 
-import java.util.Locale;
-import java.util.Scanner;
-import javafx.beans.binding.Bindings;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import smart.home.security.model.Device;
 import smart.home.security.model.Devices;
-import sun.invoke.empty.Empty;
 
 /**
  *
@@ -45,8 +39,10 @@ public class AddDevicePanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder("Add Device"));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ADD DEVICE", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
+        setPreferredSize(new java.awt.Dimension(408, 309));
 
+        saveButton.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         saveButton.setText("Save");
         saveButton.setToolTipText("Click to save the device");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -55,6 +51,7 @@ public class AddDevicePanel extends javax.swing.JPanel {
             }
         });
 
+        cancelButton.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         cancelButton.setText("Cancel");
         cancelButton.setToolTipText("");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -72,9 +69,11 @@ public class AddDevicePanel extends javax.swing.JPanel {
 
         macAddressTextfield.setToolTipText(" mac-address of the device");
 
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         jLabel1.setText("Name");
         jLabel1.setToolTipText("");
 
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         jLabel2.setText("Address");
         jLabel2.setToolTipText("");
 
@@ -82,50 +81,60 @@ public class AddDevicePanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(nameTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
-                    .addComponent(macAddressTextfield))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(203, Short.MAX_VALUE)
-                .addComponent(saveButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cancelButton)
-                .addGap(12, 12, 12))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21)
+                        .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel2)
+                        .addGap(21, 21, 21)
+                        .addComponent(macAddressTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(204, 204, 204)
+                        .addComponent(saveButton)
+                        .addGap(12, 12, 12)
+                        .addComponent(cancelButton)))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel1))
+                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(macAddressTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cancelButton)
-                    .addComponent(saveButton))
-                .addGap(31, 31, 31))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel2))
+                    .addComponent(macAddressTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(saveButton)
+                    .addComponent(cancelButton))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Returns from add device panel to smart home security frame.
+
     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
         return (SmartHomeSecurityFrame) SwingUtilities.getWindowAncestor(this);
     }
+
     /**
      * Provides Validation to the name field and address.
-     * @param evt 
+     *
+     * @param evt
      */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+
         String name = nameTextField.getText();
         String address = macAddressTextfield.getText();
         if (name.isEmpty()) {
@@ -140,8 +149,9 @@ public class AddDevicePanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_saveButtonActionPerformed
     /**
-     *  Redirects to the smart home security page
-     * @param evt 
+     * Redirects to the smart home security page
+     *
+     * @param evt
      */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());

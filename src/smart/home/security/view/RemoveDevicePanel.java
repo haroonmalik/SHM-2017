@@ -54,8 +54,11 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(jList1);
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder("Remove Device "));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "REMOVE DEVICE", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
+        setPreferredSize(new java.awt.Dimension(408, 309));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        deviceList.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         deviceList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -64,6 +67,9 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
         deviceList.setToolTipText("");
         jScrollPane1.setViewportView(deviceList);
 
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 24, 327, 202));
+
+        removeButton.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         removeButton.setText("Remove");
         removeButton.setToolTipText("Are you sure");
         removeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -71,7 +77,9 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
                 removeButtonActionPerformed(evt);
             }
         });
+        add(removeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 230, -1, -1));
 
+        cancelRemoveButton.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         cancelRemoveButton.setText("Cancel");
         cancelRemoveButton.setToolTipText("");
         cancelRemoveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -79,33 +87,7 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
                 cancelRemoveButtonActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(removeButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cancelRemoveButton)
-                .addGap(34, 34, 34))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(removeButton)
-                    .addComponent(cancelRemoveButton))
-                .addContainerGap(45, Short.MAX_VALUE))
-        );
+        add(cancelRemoveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 230, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
         return (SmartHomeSecurityFrame) SwingUtilities.getWindowAncestor(this);
