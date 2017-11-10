@@ -4,10 +4,17 @@
  * and open the template in the editor.
  */
 package smart.home.security.view;
-
+import sun.audio.*;
+import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import smart.home.security.model.Device;
 import smart.home.security.model.Devices;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 /**
  *
@@ -108,9 +115,6 @@ public class MainPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(statusLabel))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(armButton, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -121,15 +125,18 @@ public class MainPanel extends javax.swing.JPanel {
                         .addGap(0, 0, 0)
                         .addComponent(disarmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(disableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(disableButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(statusLabel)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addContainerGap()
                 .addComponent(statusLabel)
-                .addGap(130, 130, 130)
+                .addGap(152, 152, 152)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addButton)
                     .addComponent(armButton)
@@ -139,7 +146,7 @@ public class MainPanel extends javax.swing.JPanel {
                     .addComponent(removeButton)
                     .addComponent(disarmButton)
                     .addComponent(disableButton))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -160,16 +167,34 @@ public class MainPanel extends javax.swing.JPanel {
 
     private void armButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_armButtonActionPerformed
         Devices.getInstance().armDevices();
-        
-        armButton.setEnabled(false);
-        disarmButton.setEnabled(true);
+        statusLabel.setText("System Armed");// To change the staus of the label
+        armButton.setEnabled(false);// To disable the enable button after the first click
+        disarmButton.setEnabled(true);// To keep the disable button focused until the button is clicked
+         InputStream inputStream;
+        try {
+          inputStream = new FileInputStream(new File("/Users/chana/Music/iTunes/iTunes Media/Music/Unknown Artist/Unknown Album/arm.wav"));
+            AudioStream audios = new AudioStream(inputStream);
+            AudioPlayer.player.start(audios);
+        }
+       catch(Exception e){
+          JOptionPane.showMessageDialog(null, e);
+        }
     }//GEN-LAST:event_armButtonActionPerformed
 
     private void disarmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disarmButtonActionPerformed
         Devices.getInstance().disarmDevices();
-        
+        statusLabel.setText("System Disarmed");
         armButton.setEnabled(true);
         disarmButton.setEnabled(false);
+        InputStream inputStream;
+        try {
+          inputStream = new FileInputStream(new File("/Users/chana/Music/iTunes/iTunes Media/Music/Unknown Artist/Unknown Album/disarm.wav"));
+            AudioStream audios1 = new AudioStream(inputStream);
+            AudioPlayer.player.start(audios1);
+        }
+       catch(Exception e){
+          JOptionPane.showMessageDialog(null, e);
+        }
     }//GEN-LAST:event_disarmButtonActionPerformed
 
     private void enableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enableButtonActionPerformed
