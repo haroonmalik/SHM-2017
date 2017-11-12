@@ -54,7 +54,7 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(jList1);
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "REMOVE DEVICE", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Remove Device", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 12))); // NOI18N
         setPreferredSize(new java.awt.Dimension(408, 309));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

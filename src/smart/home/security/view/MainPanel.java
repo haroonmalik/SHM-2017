@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package smart.home.security.view;
-import sun.audio.*;
-import java.io.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,6 +12,7 @@ import java.io.InputStream;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import smart.home.security.model.Devices;
+import smart.home.security.utilities.DeviceManager;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
@@ -27,6 +27,7 @@ public class MainPanel extends javax.swing.JPanel {
      */
     public MainPanel() {
         initComponents();
+        updateStatus();
     }
 
     /**
@@ -167,48 +168,49 @@ public class MainPanel extends javax.swing.JPanel {
 
     private void armButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_armButtonActionPerformed
         Devices.getInstance().armDevices();
-        statusLabel.setText("System Armed");// To change the staus of the label
-        armButton.setEnabled(false);// To disable the enable button after the first click
-        disarmButton.setEnabled(true);// To keep the disable button focused until the button is clicked
-         InputStream inputStream;
+        updateStatus();
+        InputStream inputStream;
         try {
-          inputStream = new FileInputStream(new File("/Users/chana/Music/iTunes/iTunes Media/Music/Unknown Artist/Unknown Album/arm.wav"));
+            inputStream = new FileInputStream(new File("/Users/chana/Music/iTunes/iTunes Media/Music/Unknown Artist/Unknown Album/arm.wav"));
             AudioStream audios = new AudioStream(inputStream);
             AudioPlayer.player.start(audios);
-        }
-       catch(Exception e){
-          JOptionPane.showMessageDialog(null, e);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_armButtonActionPerformed
 
     private void disarmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disarmButtonActionPerformed
         Devices.getInstance().disarmDevices();
-        statusLabel.setText("System Disarmed");
-        armButton.setEnabled(true);
-        disarmButton.setEnabled(false);
+        updateStatus();
         InputStream inputStream;
         try {
-          inputStream = new FileInputStream(new File("/Users/chana/Music/iTunes/iTunes Media/Music/Unknown Artist/Unknown Album/disarm.wav"));
+            inputStream = new FileInputStream(new File("/Users/chana/Music/iTunes/iTunes Media/Music/Unknown Artist/Unknown Album/disarm.wav"));
             AudioStream audios1 = new AudioStream(inputStream);
             AudioPlayer.player.start(audios1);
-        }
-       catch(Exception e){
-          JOptionPane.showMessageDialog(null, e);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_disarmButtonActionPerformed
 
     private void enableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enableButtonActionPerformed
-        // TODO add your handling code here:
         EnablePanel enablePanel = new EnablePanel();
-        getSmartHomeSecurityFrame().replaceFramePanel(enablePanel);                                       
+        getSmartHomeSecurityFrame().replaceFramePanel(enablePanel);
     }//GEN-LAST:event_enableButtonActionPerformed
 
     private void disableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disableButtonActionPerformed
-        // TODO add your handling code here:
         DisablePanel disablePanel = new DisablePanel();
-        getSmartHomeSecurityFrame().replaceFramePanel(disablePanel);             
+        getSmartHomeSecurityFrame().replaceFramePanel(disablePanel);
     }//GEN-LAST:event_disableButtonActionPerformed
 
+    private void updateStatus() {        
+        if (Devices.getInstance().armed()) {            
+            statusLabel.setText("Status: System Armed");
+        } else {
+            statusLabel.setText("Status: System Disarmed");
+        }
+        armButton.setEnabled(Devices.getInstance().canArmDevices());
+        disarmButton.setEnabled(Devices.getInstance().canDisarmDevices());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

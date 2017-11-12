@@ -67,4 +67,40 @@ public class Devices {
             device.disarm();
         }
     }
+    
+    public boolean armed() {
+        for (Device device : devices) {
+            if (device.isEnabled() && device.isArmed()) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public boolean canArmDevices() {
+        if (devices.isEmpty()) {
+            return false;
+        } else {
+            for (Device device : devices) {
+                if (device.isEnabled() && device.isDisarmed())  {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+    
+    public boolean canDisarmDevices() {
+        if (devices.isEmpty()) {
+            return false;
+        } else {
+            for (Device device : devices) {
+                if (device.isEnabled() && device.isArmed()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

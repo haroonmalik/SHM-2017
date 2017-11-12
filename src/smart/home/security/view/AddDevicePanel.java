@@ -68,6 +68,11 @@ public class AddDevicePanel extends javax.swing.JPanel {
         });
 
         macAddressTextfield.setToolTipText(" mac-address of the device");
+        macAddressTextfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                macAddressTextfieldActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         jLabel1.setText("Name");
@@ -98,7 +103,7 @@ public class AddDevicePanel extends javax.swing.JPanel {
                         .addComponent(saveButton)
                         .addGap(12, 12, 12)
                         .addComponent(cancelButton)))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,17 +114,18 @@ public class AddDevicePanel extends javax.swing.JPanel {
                         .addGap(4, 4, 4)
                         .addComponent(jLabel1))
                     .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
+                        .addGap(37, 37, 37)
                         .addComponent(jLabel2))
-                    .addComponent(macAddressTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(macAddressTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(saveButton)
                     .addComponent(cancelButton))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     // Returns from add device panel to smart home security frame.
@@ -137,6 +143,10 @@ public class AddDevicePanel extends javax.swing.JPanel {
 
         String name = nameTextField.getText();
         String address = macAddressTextfield.getText();
+//        String regex = "00:00:00:00:00:00";
+//        System.out.println(address.matches(regex));
+
+
         if (name.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Enter a valid device name!");
         } else if (address.isEmpty()) {
@@ -147,6 +157,7 @@ public class AddDevicePanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Device saved");
             getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
         }
+        
     }//GEN-LAST:event_saveButtonActionPerformed
     /**
      * Redirects to the smart home security page
@@ -161,6 +172,11 @@ public class AddDevicePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_nameTextFieldActionPerformed
 
+    private void macAddressTextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_macAddressTextfieldActionPerformed
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_macAddressTextfieldActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;

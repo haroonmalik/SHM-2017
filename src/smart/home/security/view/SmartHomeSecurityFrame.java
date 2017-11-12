@@ -7,7 +7,7 @@ package smart.home.security.view;
 
 import java.awt.Component;
 import java.awt.GridLayout;
-import javax.swing.JProgressBar;
+import smart.home.security.utilities.DeviceManager;
 
 /**
  *
@@ -22,8 +22,7 @@ public class SmartHomeSecurityFrame extends javax.swing.JFrame {
         initComponents();
         pack();
         showMainPanel();
-        setResizable(false);
-
+        setResizable(false);        
     }
 
     /**
@@ -76,6 +75,11 @@ public class SmartHomeSecurityFrame extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        // Load the devices from file.
+        DeviceManager.loadDevices();
+        
+        // Save the devices when the JVM shuts down.
+        Runtime.getRuntime().addShutdownHook(new DeviceManager());
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
