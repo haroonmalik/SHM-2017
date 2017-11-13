@@ -140,12 +140,8 @@ public class AddDevicePanel extends javax.swing.JPanel {
      * @param evt
      */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-
         String name = nameTextField.getText();
         String address = macAddressTextfield.getText();
-//        String regex = "00:00:00:00:00:00";
-//        System.out.println(address.matches(regex));
-
 
         if (name.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Enter a valid device name!");
@@ -157,7 +153,6 @@ public class AddDevicePanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Device saved");
             getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
         }
-        
     }//GEN-LAST:event_saveButtonActionPerformed
     /**
      * Redirects to the smart home security page
@@ -174,8 +169,6 @@ public class AddDevicePanel extends javax.swing.JPanel {
 
     private void macAddressTextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_macAddressTextfieldActionPerformed
         // TODO add your handling code here:
-        
-        
     }//GEN-LAST:event_macAddressTextfieldActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

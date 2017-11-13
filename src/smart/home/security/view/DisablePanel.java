@@ -5,15 +5,13 @@
  */
 package smart.home.security.view;
 
-import java.awt.AWTEvent;
-import java.awt.event.ActionListener;
-import javax.swing.DefaultListModel;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.event.AncestorListener;
-import javax.swing.plaf.basic.BasicOptionPaneUI;
+import javax.swing.table.DefaultTableModel;
 import smart.home.security.model.Device;
 import smart.home.security.model.Devices;
+import smart.home.security.utilities.DeviceTableModel;
 
 /**
  *
@@ -25,14 +23,12 @@ public class DisablePanel extends javax.swing.JPanel {
      * Creates new form DisablePanel
      */
     public DisablePanel() {
-        initComponents();
-        DefaultListModel defaultListModel = new DefaultListModel();
-        for (Device device : Devices.getInstance().getDevices()) {
-            if (device.isEnabled()) {
-                defaultListModel.addElement(device.getName() + " || " + device.getAddress());                
-            }            
-        }
-        disableList.setModel(defaultListModel);        
+        initComponents(); 
+        
+        List<Device> enabledDevices = Devices.getInstance().getEnabledDevices();
+        DefaultTableModel model = DeviceTableModel.defaultTableModel(enabledDevices);
+        
+        disableDeviceTable.setModel(model);
     }
 
     /**
@@ -44,20 +40,13 @@ public class DisablePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        disableList = new javax.swing.JList<>();
         disableButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        disableDeviceTable = new javax.swing.JTable();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "DISABLE DEVICE PANEL", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 13))); // NOI18N
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Disable Device", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 13))); // NOI18N
         setPreferredSize(new java.awt.Dimension(408, 309));
-
-        disableList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(disableList);
 
         disableButton.setText("Disable");
         disableButton.addActionListener(new java.awt.event.ActionListener() {
@@ -73,31 +62,42 @@ public class DisablePanel extends javax.swing.JPanel {
             }
         });
 
+        disableDeviceTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name", "Address"
+            }
+        ));
+        jScrollPane2.setViewportView(disableDeviceTable);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(disableButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cancelButton)
-                .addGap(12, 12, 12))
             .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 222, Short.MAX_VALUE)
+                        .addComponent(disableButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cancelButton)
+                        .addGap(12, 12, 12))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cancelButton)
-                    .addComponent(disableButton))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(disableButton)
+                    .addComponent(cancelButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -105,9 +105,9 @@ public class DisablePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         //when clicked on disable button remove the device from disable panel and 
         // show it in enable panel(and the device needs to be disable in enable panel).
-        int selectedIndex = disableList.getSelectedIndex();
+        int selectedIndex = disableDeviceTable.getSelectedRow();
         if (selectedIndex >= 0) {
-            Device device = Devices.getInstance().getDevices().get(selectedIndex);
+            Device device = Devices.getInstance().getEnabledDevices().get(selectedIndex);
             Devices.getInstance().disableDevice(device);
             JOptionPane.showMessageDialog(this, "Device disable");
             getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
@@ -126,7 +126,7 @@ public class DisablePanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton disableButton;
-    private javax.swing.JList<String> disableList;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable disableDeviceTable;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

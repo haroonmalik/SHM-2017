@@ -31,6 +31,26 @@ public class Devices {
     public List<Device> getDevices() {
         return devices;
     }
+    
+    public List<Device> getEnabledDevices() {
+        List<Device> enabledDevices = new ArrayList<>();
+        for (Device device : devices) {
+            if (device.isEnabled()) {
+                enabledDevices.add(device);
+            }
+        }
+        return enabledDevices;
+    }
+    
+    public List<Device> getDisabledDevices() {
+        List<Device> disabledDevices = new ArrayList<>();
+        for (Device device : devices) {
+            if (device.isDisabled()) {
+                disabledDevices.add(device);
+            }
+        }
+        return disabledDevices;        
+    }
 
     public void addDevice(Device device) {
         if (device != null) {

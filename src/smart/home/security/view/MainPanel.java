@@ -7,12 +7,10 @@ package smart.home.security.view;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import smart.home.security.model.Devices;
-import smart.home.security.utilities.DeviceManager;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
@@ -24,12 +22,12 @@ public class MainPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form MainPanel
-     */
+     */   
     public MainPanel() {
         initComponents();
-        updateStatus();
+        updateStatus();        
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -207,7 +205,7 @@ public class MainPanel extends javax.swing.JPanel {
             statusLabel.setText("Status: System Armed");
         } else {
             statusLabel.setText("Status: System Disarmed");
-        }
+        } 
         armButton.setEnabled(Devices.getInstance().canArmDevices());
         disarmButton.setEnabled(Devices.getInstance().canDisarmDevices());
     }

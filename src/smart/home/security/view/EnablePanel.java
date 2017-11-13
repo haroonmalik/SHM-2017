@@ -5,32 +5,31 @@
  */
 package smart.home.security.view;
 
-import javax.swing.DefaultListModel;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 import smart.home.security.model.Device;
 import smart.home.security.model.Devices;
+import smart.home.security.utilities.DeviceTableModel;
 
 /**
  *
  * @author chana
  */
-public class EnablePanel extends javax.swing.JPanel{
+public class EnablePanel extends javax.swing.JPanel {
 
     /**
      * Creates new form EnablePanel
      */
     public EnablePanel() {
         initComponents();
-        DefaultListModel defaultListModel = new DefaultListModel();
-        for (Device device : Devices.getInstance().getDevices()) {
-            if (!device.isEnabled()) {
-                defaultListModel.addElement(device.getName() + " || " + device.getAddress());                
-            }            
-        }
-        enableList.setModel(defaultListModel);        
+        
+        List<Device> disabledDevices = Devices.getInstance().getDisabledDevices();
+        DefaultTableModel model = DeviceTableModel.defaultTableModel(disabledDevices);
+        
+        enableDeviceTable.setModel(model);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,29 +39,13 @@ public class EnablePanel extends javax.swing.JPanel{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        enableList = new javax.swing.JList<>();
         enableButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        enableDeviceTable = new javax.swing.JTable();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "ENABLE DEVICE PANEL", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 13))); // NOI18N
+        setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Enable Device", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 13))); // NOI18N
         setPreferredSize(new java.awt.Dimension(408, 309));
-
-        enableList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        enableList.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                enableListAncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-        jScrollPane1.setViewportView(enableList);
 
         enableButton.setText("Enable");
         enableButton.addActionListener(new java.awt.event.ActionListener() {
@@ -78,31 +61,39 @@ public class EnablePanel extends javax.swing.JPanel{
             }
         });
 
+        enableDeviceTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name", "Address"
+            }
+        ));
+        jScrollPane2.setViewportView(enableDeviceTable);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(enableButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cancelButton)
-                .addGap(9, 9, 9))
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(enableButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cancelButton))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(enableButton)
                     .addComponent(cancelButton))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -111,27 +102,23 @@ public class EnablePanel extends javax.swing.JPanel{
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void enableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enableButtonActionPerformed
-        int selectedIndex = enableList.getSelectedIndex();
+        int selectedIndex = enableDeviceTable.getSelectedRow();
         if (selectedIndex >= 0) {
-            Device device = Devices.getInstance().getDevices().get(selectedIndex);
+            Device device = Devices.getInstance().getDisabledDevices().get(selectedIndex);
             Devices.getInstance().enableDevice(device);
             JOptionPane.showMessageDialog(this, "Device enable");
             getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
         }
     }//GEN-LAST:event_enableButtonActionPerformed
-
-    private void enableListAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_enableListAncestorAdded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_enableListAncestorAdded
     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
         return (SmartHomeSecurityFrame) SwingUtilities.getWindowAncestor(this);
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton enableButton;
-    private javax.swing.JList<String> enableList;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable enableDeviceTable;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }
