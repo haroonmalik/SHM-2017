@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import smart.home.security.model.Device;
 import smart.home.security.model.Devices;
+import smart.home.security.utilities.DeviceSocketManager;
 
 /**
  *
@@ -150,6 +151,8 @@ public class AddDevicePanel extends javax.swing.JPanel {
         } else {
             Device device = new Device(name, address);
             Devices.getInstance().addDevice(device);
+            
+            DeviceSocketManager.getInstance().connectDevice(device);
             JOptionPane.showMessageDialog(this, "Device saved");
             getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
         }

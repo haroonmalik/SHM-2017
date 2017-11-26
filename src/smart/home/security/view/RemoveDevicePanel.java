@@ -11,6 +11,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import smart.home.security.model.Device;
 import smart.home.security.model.Devices;
+import smart.home.security.utilities.DeviceSocketManager;
 import smart.home.security.utilities.DeviceTableModel;
 
 /**
@@ -101,6 +102,7 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
         if (selectedIndex >= 0) {
             Device device = Devices.getInstance().getDevices().get(selectedIndex);
             Devices.getInstance().removeDevice(device);
+            DeviceSocketManager.getInstance().disconnectDevice(device);            
             JOptionPane.showMessageDialog(this, "Device removed");
             getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
         }

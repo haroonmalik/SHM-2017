@@ -11,6 +11,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import smart.home.security.model.Device;
 import smart.home.security.model.Devices;
+import smart.home.security.utilities.DeviceSocketManager;
 import smart.home.security.utilities.DeviceTableModel;
 
 /**
@@ -109,6 +110,7 @@ public class DisablePanel extends javax.swing.JPanel {
         if (selectedIndex >= 0) {
             Device device = Devices.getInstance().getEnabledDevices().get(selectedIndex);
             Devices.getInstance().disableDevice(device);
+            DeviceSocketManager.getInstance().sendDeviceMessage(device);
             JOptionPane.showMessageDialog(this, "Device disable");
             getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
         }

@@ -7,7 +7,10 @@ package smart.home.security.view;
 
 import java.awt.Component;
 import java.awt.GridLayout;
+import smart.home.security.model.Device;
+import smart.home.security.model.Devices;
 import smart.home.security.utilities.DeviceManager;
+import smart.home.security.utilities.DeviceSocketManager;
 
 /**
  *
@@ -76,10 +79,14 @@ public class SmartHomeSecurityFrame extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         // Load the devices from file.
-        DeviceManager.loadDevices();
+        DeviceManager.loadDevices();                
         
         // Save the devices when the JVM shuts down.
         Runtime.getRuntime().addShutdownHook(new DeviceManager());
+        
+        // Establish connection to all devices.               
+        DeviceSocketManager.getInstance().connectDevices();
+        Runtime.getRuntime().addShutdownHook(DeviceSocketManager.getInstance());
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -89,7 +96,6 @@ public class SmartHomeSecurityFrame extends javax.swing.JFrame {
             }
         });
     }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
