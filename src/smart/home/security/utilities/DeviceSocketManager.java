@@ -6,7 +6,6 @@
 package smart.home.security.utilities;
 
 import java.io.IOException;
-import java.io.StringReader;
 import smart.home.security.model.Device;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -15,10 +14,10 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 import javax.swing.JOptionPane;
 import smart.home.security.model.Devices;
+import smart.home.security.model.Notifications;
+import smart.home.security.view.SmartHomeSecurityFrame;
 
 public class DeviceSocketManager extends Thread {
 
@@ -91,7 +90,7 @@ public class DeviceSocketManager extends Thread {
         return null;
     }
 
-    public void sendDeviceMessage(Device device) {
+    public void sendDeviceMessage(final Device device) {
         final DeviceSocketClient clientEndPoint = deviceSockets.get(device);
 
         if (clientEndPoint != null) {
@@ -99,11 +98,10 @@ public class DeviceSocketManager extends Thread {
             clientEndPoint.addMessageHandler(new DeviceSocketClient.MessageHandler() {
                 public void handleMessage(String message) {
                     System.out.println(message);
-
                     if (message.contains("NOTIFY")) {
-                        String deviceStatus = message.contains("'DEVICE_OPEN': 1") ? "opened" : "closed";
-                        String dialogMessage = String.format("%s has been %s!", device.getName(), deviceStatus);
-                        JOptionPane.showMessageDialog(null, dialogMessage, "Device Status", JOptionPane.PLAIN_MESSAGE);
+                        Boolean deviceStatus = message.contains("'DEVICE_OPEN': 1");
+                        Notifications.getInstance().addNotification(device, deviceStatus);                       
+                        SmartHomeSecurityFrame.getInstance().refresh();
                     }
                 }
             });

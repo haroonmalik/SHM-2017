@@ -19,12 +19,12 @@ public class MainPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form MainPanel
-     */   
+     */
     public MainPanel() {
         initComponents();
-        updateStatus();        
+        updateStatus();
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,7 +43,6 @@ public class MainPanel extends javax.swing.JPanel {
         statusLabel = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SMART HOME SECURITY", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 14))); // NOI18N
-        setForeground(new java.awt.Color(0, 0, 0));
         setToolTipText("");
         setPreferredSize(new java.awt.Dimension(408, 309));
 
@@ -147,16 +146,15 @@ public class MainPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
-        return (SmartHomeSecurityFrame) SwingUtilities.getWindowAncestor(this);
+        return SmartHomeSecurityFrame.getInstance();
     }
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        AddDevicePanel addDevicePanel = new AddDevicePanel();
-        getSmartHomeSecurityFrame().replaceFramePanel(addDevicePanel);
+        AvailableDevicesPanel availableDevicesPanel = new AvailableDevicesPanel();
+        getSmartHomeSecurityFrame().replaceFramePanel(availableDevicesPanel);
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-        // TODO add your handling code here:
         RemoveDevicePanel removeDevicePanel = new RemoveDevicePanel();
         getSmartHomeSecurityFrame().replaceFramePanel(removeDevicePanel);
     }//GEN-LAST:event_removeButtonActionPerformed
@@ -176,9 +174,9 @@ public class MainPanel extends javax.swing.JPanel {
         for (Device device : Devices.getInstance().getDevices()) {
             DeviceSocketManager.getInstance().sendDeviceMessage(device);
         }
-                
+
         updateStatus();
-        
+
         AudioManager audioManager = new AudioManager();
         audioManager.playAudio(AudioManager.SYSTEM_DISARMED);
     }//GEN-LAST:event_disarmButtonActionPerformed
@@ -193,12 +191,12 @@ public class MainPanel extends javax.swing.JPanel {
         getSmartHomeSecurityFrame().replaceFramePanel(disablePanel);
     }//GEN-LAST:event_disableButtonActionPerformed
 
-    private void updateStatus() {        
-        if (Devices.getInstance().armed()) {            
+    private void updateStatus() {
+        if (Devices.getInstance().armed()) {
             statusLabel.setText("Status: System Armed");
         } else {
             statusLabel.setText("Status: System Disarmed");
-        } 
+        }
         armButton.setEnabled(Devices.getInstance().canArmDevices());
         disarmButton.setEnabled(Devices.getInstance().canDisarmDevices());
     }

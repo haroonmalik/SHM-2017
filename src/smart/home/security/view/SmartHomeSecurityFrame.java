@@ -5,10 +5,11 @@
  */
 package smart.home.security.view;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.GridLayout;
-import smart.home.security.model.Device;
-import smart.home.security.model.Devices;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import smart.home.security.model.Notifications;
 import smart.home.security.utilities.DeviceManager;
 import smart.home.security.utilities.DeviceSocketManager;
 
@@ -18,27 +19,48 @@ import smart.home.security.utilities.DeviceSocketManager;
  */
 public class SmartHomeSecurityFrame extends javax.swing.JFrame {
 
+    private static SmartHomeSecurityFrame frame;
+    private static Component currentComponent;
+    
     /**
      * Creates new form SmartHomeSecurityFrame
      */
     public SmartHomeSecurityFrame() {
         initComponents();
+        setLayout(new BorderLayout());                    
         pack();
         showMainPanel();
-        setResizable(false);        
+        setResizable(false);       
     }
 
-    /**
-     * Replaces the JFrame with JPanel
-     *
-     * @param component
-     */
+    public static SmartHomeSecurityFrame getInstance() {
+        if (frame == null) {
+            frame = new SmartHomeSecurityFrame();
+        }
+        return frame;
+    }
+    
     public void replaceFramePanel(Component component) {
-        getContentPane().removeAll();
-        setLayout(new GridLayout(1, 1));
-        add(component);
+        currentComponent = component;
+        refresh();        
+    }
+    
+    public void refresh() {
+        getContentPane().removeAll();        
+        add(componentPanel(currentComponent));
         getContentPane().repaint();
-        pack();
+        pack();        
+    }
+    
+    private JPanel componentPanel(Component component) {
+        JPanel container = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        container.add(component);
+        if (Notifications.getInstance().UnreadNotifications()) {
+            container.add(new NotificationBanner());   
+        }
+        
+        return container;
     }
 
     /**
@@ -46,7 +68,7 @@ public class SmartHomeSecurityFrame extends javax.swing.JFrame {
      */
     private void showMainPanel() {
         replaceFramePanel(new MainPanel());
-    }
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -92,7 +114,7 @@ public class SmartHomeSecurityFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new SmartHomeSecurityFrame().setVisible(true);
+                SmartHomeSecurityFrame.getInstance().setVisible(true);
             }
         });
     }
