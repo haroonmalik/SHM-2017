@@ -27,7 +27,7 @@ public class SmartHomeSecurityFrame extends javax.swing.JFrame {
      */
     public SmartHomeSecurityFrame() {
         initComponents();
-        setLayout(new BorderLayout());                    
+        setLayout(new BorderLayout());
         pack();
         showMainPanel();
         setResizable(false);       

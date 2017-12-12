@@ -20,7 +20,7 @@ public class DeviceTableModel {
         model.addColumn("Address");
         
         for (Device device : devices) {
-            model.addRow(new String[] {device.getName(), device.getAddress()});
+            model.addRow(new String[] {device.getName(), device.getMacAddress()});
         }
         
         return model;

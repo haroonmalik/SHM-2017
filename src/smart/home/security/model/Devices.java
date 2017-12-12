@@ -31,7 +31,7 @@ public class Devices {
     public List<Device> getDevices() {
         return devices;
     }
-    
+
     public List<Device> getEnabledDevices() {
         List<Device> enabledDevices = new ArrayList<>();
         for (Device device : devices) {
@@ -41,7 +41,7 @@ public class Devices {
         }
         return enabledDevices;
     }
-    
+
     public List<Device> getDisabledDevices() {
         List<Device> disabledDevices = new ArrayList<>();
         for (Device device : devices) {
@@ -49,7 +49,7 @@ public class Devices {
                 disabledDevices.add(device);
             }
         }
-        return disabledDevices;        
+        return disabledDevices;
     }
 
     public void addDevice(Device device) {
@@ -75,42 +75,42 @@ public class Devices {
             device.disable();
         }
     }
-    
+
     public void armDevices() {
         for (Device device : devices) {
             device.arm();
         }
     }
-    
+
     public void disarmDevices() {
         for (Device device : devices) {
             device.disarm();
         }
     }
-    
+
     public boolean armed() {
         for (Device device : devices) {
             if (device.isEnabled() && device.isArmed()) {
                 return true;
             }
         }
-        
+
         return false;
     }
-    
+
     public boolean canArmDevices() {
         if (devices.isEmpty()) {
             return false;
         } else {
             for (Device device : devices) {
-                if (device.isEnabled() && device.isDisarmed())  {
+                if (device.isEnabled() && device.isDisarmed()) {
                     return true;
                 }
             }
             return false;
         }
     }
-    
+
     public boolean canDisarmDevices() {
         if (devices.isEmpty()) {
             return false;

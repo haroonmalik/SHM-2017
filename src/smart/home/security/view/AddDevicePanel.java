@@ -16,12 +16,14 @@ import smart.home.security.utilities.DeviceSocketManager;
  * @author chana
  */
 public class AddDevicePanel extends javax.swing.JPanel {
-
+    private String ipAddress;
     /**
      * Creates new form AddDevicePanel
      */
-    public AddDevicePanel() {
+    public AddDevicePanel(String address, String ipAddress) {        
         initComponents();
+        this.ipAddress = ipAddress;
+        macAddressTextfield.setText(address); 
     }
 
     /**
@@ -142,14 +144,14 @@ public class AddDevicePanel extends javax.swing.JPanel {
      */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         String name = nameTextField.getText();
-        String address = macAddressTextfield.getText();
+        String address = ipAddress;
 
         if (name.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Enter a valid device name!");
         } else if (address.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Enter a valid device address!");
         } else {
-            Device device = new Device(name, address);
+            Device device = new Device(name, address, macAddressTextfield.getText());
             Devices.getInstance().addDevice(device);
             
             DeviceSocketManager.getInstance().connectDevice(device);

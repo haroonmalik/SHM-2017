@@ -15,20 +15,37 @@ public class Device {
     private String address;
     private boolean enabled;
     private boolean active;
+    private String macAddress;
 
     public Device(String name, String address) {
         this(name, address, true);
+    }
+    
+    public Device(String name, String address, String macAddress) {
+        this(name, address, true, false, macAddress);
     }
 
     public Device(String name, String address, boolean enabled) {
         this(name, address, enabled, false);
     }
-
     public Device(String name, String address, boolean enabled, boolean active) {
         this.name = name;
         this.address = address;
         this.enabled = enabled;
         this.active = active;
+    }
+
+    public Device(String name, String address, boolean enabled, boolean active, String macAddress) {
+        this.name = name;
+        this.address = address;
+        this.enabled = enabled;
+        this.active = active;
+        this.macAddress = macAddress;
+    }
+
+
+    public String getMacAddress() {
+        return macAddress;
     }
 
     public String getName() {
@@ -80,20 +97,22 @@ public class Device {
 
     public String serialize() {
         String deviceName = getName();
-        String deviceAddress = getAddress();
+        String ipAddress = getAddress();
+        String macAddress = getMacAddress();
         String enabled = isEnabled() ? "1" : "0";
         String active = isArmed() ? "1" : "0";
-        return String.format("%s|%s|%s|%s", deviceName, deviceAddress, enabled, active);
+        return String.format("%s|%s|%s|%s|%s", deviceName, ipAddress, macAddress, enabled, active);
     }
 
     public static Device deserialize(String rawDevice) {
         String[] tokens = rawDevice.split("\\|");
         String deviceName = tokens[0];
-        String deviceAddress = tokens[1];
-        String enabled = tokens[2];
-        String active = tokens[3];
+        String ipAddress = tokens[1];
+        String macAddress = tokens[2];
+        String enabled = tokens[3];
+        String active = tokens[4];
 
-        Device device = new Device(deviceName, deviceAddress);
+        Device device = new Device(deviceName, ipAddress, macAddress);
         if (enabled.equals("0")) {
             device.disable();
         } else {
@@ -104,7 +123,7 @@ public class Device {
         } else {
             device.arm();
         }
-        
+
         return device;
     }
 }

@@ -64,7 +64,7 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
                 removeButtonActionPerformed(evt);
             }
         });
-        add(removeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 80, -1));
+        add(removeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, 80, -1));
 
         cancelRemoveButton.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         cancelRemoveButton.setText("Cancel");
@@ -74,7 +74,7 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
                 cancelRemoveButtonActionPerformed(evt);
             }
         });
-        add(cancelRemoveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 80, -1));
+        add(cancelRemoveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 260, 80, -1));
 
         removeDeviceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -86,7 +86,7 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
         ));
         jScrollPane3.setViewportView(removeDeviceTable);
 
-        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 360, 230));
+        add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 380, 240));
     }// </editor-fold>//GEN-END:initComponents
     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
         return (SmartHomeSecurityFrame) SwingUtilities.getWindowAncestor(this);
