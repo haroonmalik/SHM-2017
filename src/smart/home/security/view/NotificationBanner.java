@@ -39,6 +39,8 @@ public class NotificationBanner extends javax.swing.JPanel implements MouseListe
 
         setBorder(new javax.swing.border.MatteBorder(null));
 
+        notificationLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        notificationLabel.setForeground(new java.awt.Color(204, 0, 0));
         notificationLabel.setText("New Device Notification! Click to see details.");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
