@@ -100,7 +100,9 @@ public class DeviceSocketManager extends Thread {
                     System.out.println(message);
                     if (message.contains("NOTIFY")) {
                         Boolean deviceStatus = message.contains("'DEVICE_OPEN': 1");
-                        Notifications.getInstance().addNotification(device, deviceStatus);                       
+                        Notifications.getInstance().addNotification(device, deviceStatus);
+                        AudioManager audioManager = new AudioManager();
+                        audioManager.playAudio(AudioManager.SYSTEM_ALERT);
                         SmartHomeSecurityFrame.getInstance().refresh();
                     }
                 }

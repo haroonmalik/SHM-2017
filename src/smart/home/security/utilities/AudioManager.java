@@ -15,6 +15,7 @@ public class AudioManager {
     
     public static String SYSTEM_ARMED = "arm.wav";
     public static String SYSTEM_DISARMED = "disarm.wav";
+    public static String SYSTEM_ALERT = "alert.wav";
     private static String RESOURCE_FILEPATH = "/smart/home/security/resources/audio/";
     
     public void playAudio(String audioName) {
