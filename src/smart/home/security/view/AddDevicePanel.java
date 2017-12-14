@@ -5,6 +5,7 @@
  */
 package smart.home.security.view;
 
+import static javax.security.auth.callback.ConfirmationCallback.YES_NO_OPTION;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import smart.home.security.model.Device;
@@ -16,14 +17,16 @@ import smart.home.security.utilities.DeviceSocketManager;
  * @author chana
  */
 public class AddDevicePanel extends javax.swing.JPanel {
+
     private String ipAddress;
+
     /**
      * Creates new form AddDevicePanel
      */
-    public AddDevicePanel(String address, String ipAddress) {        
+    public AddDevicePanel(String address, String ipAddress) {
         initComponents();
         this.ipAddress = ipAddress;
-        macAddressTextfield.setText(address); 
+        macAddressTextfield.setText(address);
     }
 
     /**
@@ -150,12 +153,14 @@ public class AddDevicePanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Enter a valid device name!");
         } else if (address.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Enter a valid device address!");
-        } else {
-            Device device = new Device(name, address, macAddressTextfield.getText());
-            Devices.getInstance().addDevice(device);
-            
-            DeviceSocketManager.getInstance().connectDevice(device);
-            JOptionPane.showMessageDialog(this, "Device saved");
+        } else {            
+            String optionPaneMsg = "Are you sure you want to add this device";
+            int choice = JOptionPane.showConfirmDialog(this, optionPaneMsg, "", JOptionPane.YES_NO_OPTION);
+            if (choice == JOptionPane.YES_OPTION) {
+                Device device = new Device(name, address, macAddressTextfield.getText());
+                Devices.getInstance().addDevice(device);
+                DeviceSocketManager.getInstance().connectDevice(device);
+            }
             getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
         }
     }//GEN-LAST:event_saveButtonActionPerformed
