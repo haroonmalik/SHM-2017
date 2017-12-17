@@ -5,23 +5,24 @@
  */
 package smart.home.security.view;
 
-import javax.swing.SwingUtilities;
 import smart.home.security.model.Device;
 import smart.home.security.model.Devices;
 import smart.home.security.utilities.AudioManager;
 import smart.home.security.utilities.DeviceSocketManager;
 
 /**
- *
- * @author chana
+ * The main panel view of the smart home security.
+ * @author archana
  */
 public class MainPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form MainPanel
+     * The constructor for the main panel view.
      */
     public MainPanel() {
+        // Initialize the components within the main panel view.
         initComponents();
+        // Update the status of the devices (Armed or Disarmed).
         updateStatus();
     }
 
@@ -145,59 +146,123 @@ public class MainPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Helper to get the smart home security frame. 
+     * @return the SmartHomeSecurityFrame of this component.
+     */
     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
         return SmartHomeSecurityFrame.getInstance();
     }
 
+    /**
+     * The show add button view action performed. Launches the work flow to add
+     * a device.
+     * @param evt - The button action event. 
+     */
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // Create the available devices panel.
         AvailableDevicesPanel availableDevicesPanel = new AvailableDevicesPanel();
+        // Update the main content pane with the available devices panel.
         getSmartHomeSecurityFrame().replaceFramePanel(availableDevicesPanel);
     }//GEN-LAST:event_addButtonActionPerformed
 
+    /**
+     * The remove devices button view action performed. Launches the work flow
+     * to remove an existing device.
+     * @param evt - The button action event. 
+     */
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
+        // Create the remove device panel.
         RemoveDevicePanel removeDevicePanel = new RemoveDevicePanel();
+        // Update the main content pane with the remove devices panel.
         getSmartHomeSecurityFrame().replaceFramePanel(removeDevicePanel);
     }//GEN-LAST:event_removeButtonActionPerformed
 
+    /**
+     * The arm system button action performed. When clicked, arm all the devices
+     * and notify the user that the system has been armed.
+     * @param evt - The button action event.  
+     */
     private void armButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_armButtonActionPerformed
+        // Update the model to arm all devices.
         Devices.getInstance().armDevices();
+        // Iterate through all the devices.
         for (Device device : Devices.getInstance().getDevices()) {
+            // Send a message to the device to arm.
             DeviceSocketManager.getInstance().sendDeviceMessage(device);
         }
+        
+        // Update the status view.
         updateStatus();
+        
+        // Alert the user that the system is armed by playing an audio.
         AudioManager audioManager = new AudioManager();
         audioManager.playAudio(AudioManager.SYSTEM_ARMED);
     }//GEN-LAST:event_armButtonActionPerformed
 
+    /**
+     * The disarm system button action performed. When clicked, disarm all the
+     * devices and notify the user that the system has been disarmed.
+     * @param evt - The button action event.  
+     */
     private void disarmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disarmButtonActionPerformed
+        // Update the model to disarm all devices.
         Devices.getInstance().disarmDevices();
+        // Iterate through all the devices.
         for (Device device : Devices.getInstance().getDevices()) {
+            // Send a message to the device to diarm.
             DeviceSocketManager.getInstance().sendDeviceMessage(device);
         }
 
+        // Update the status view.
         updateStatus();
 
+        // Alert the user that the system is disarmed by playing an audio.
         AudioManager audioManager = new AudioManager();
         audioManager.playAudio(AudioManager.SYSTEM_DISARMED);
     }//GEN-LAST:event_disarmButtonActionPerformed
 
+    /**
+     * The show enable devices button action performed. Show the enable panel
+     * when the button is clicked.
+     * @param evt - The button action event. 
+     */
     private void enableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enableButtonActionPerformed
+        // Create a new enable panel.
         EnablePanel enablePanel = new EnablePanel();
+        // Update the main content pane with the enable panel.
         getSmartHomeSecurityFrame().replaceFramePanel(enablePanel);
     }//GEN-LAST:event_enableButtonActionPerformed
 
+    /**
+     * The show disable devices button action performed. Show the disable panel
+     * when the button is clicked.
+     * @param evt - The button action event.
+     */
     private void disableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disableButtonActionPerformed
+        // Create a new disable panel.
         DisablePanel disablePanel = new DisablePanel();
+        // Update the main content pane with the disable panel.
         getSmartHomeSecurityFrame().replaceFramePanel(disablePanel);
     }//GEN-LAST:event_disableButtonActionPerformed
 
+    /**
+     * Update the status of the system. Sets the status to:
+     * "Status: System Armed" - When the enabled devices are armed.
+     * "Status: System Disarmed" - When the devices are not armed.
+     */
     private void updateStatus() {
+        // Determine if the devices are armed or disarmed.
         if (Devices.getInstance().armed()) {
+            // Update the status label with the armed message.
             statusLabel.setText("Status: System Armed");
         } else {
+            // Update the status label with the disarm message.
             statusLabel.setText("Status: System Disarmed");
         }
+        // Enable/disable the arm button if the devices can be armed.
         armButton.setEnabled(Devices.getInstance().canArmDevices());
+        // Enable/disable the disarm button if the devices can be disarmed.
         disarmButton.setEnabled(Devices.getInstance().canDisarmDevices());
     }
 

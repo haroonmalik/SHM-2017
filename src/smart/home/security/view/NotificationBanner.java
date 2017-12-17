@@ -1,16 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package smart.home.security.view;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 /**
- *
- * @author chana
+ * The notification banner view.
+ * @author archana
  */
 public class NotificationBanner extends javax.swing.JPanel implements MouseListener {
 
@@ -18,10 +13,16 @@ public class NotificationBanner extends javax.swing.JPanel implements MouseListe
      * Creates new form NotificationPanel
      */
     public NotificationBanner() {
+        // Initialize the notification banner components.
         initComponents();
+        // Add an mouse listener to self.
         addMouseListener(this);
     }
 
+    /**
+     * Helper to get the smart home security frame. 
+     * @return the SmartHomeSecurityFrame of this component.
+     */
     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
         return SmartHomeSecurityFrame.getInstance();
     }
@@ -66,25 +67,35 @@ public class NotificationBanner extends javax.swing.JPanel implements MouseListe
     private javax.swing.JLabel notificationLabel;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Invoked when the mouse button has been clicked (pressed
+     * and released) on a component.
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
+        // Create the notifications view.
         NotificationsPanel notificationsPanel = new NotificationsPanel();
+        // Navigate from the current view to the notifications view.
         getSmartHomeSecurityFrame().replaceFramePanel(notificationsPanel);
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+        // Overridden - unused
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        // Overridden - unused
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+        // Overridden - unused
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        // Overridden - unused
     }
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package smart.home.security.view;
 
 import java.util.List;
@@ -15,17 +10,22 @@ import smart.home.security.utilities.DeviceSocketManager;
 import smart.home.security.utilities.DeviceTableModel;
 
 /**
- *
- * @author chana
+ * The view that shows all the devices that can be removed.
+ * @author archana
  */
 public class RemoveDevicePanel extends javax.swing.JPanel {
 
+    /**
+     * Create the remove device panel view.
+     */
     public RemoveDevicePanel() {
+        // Initialize the components of the remove device panel.
         initComponents();
-
+        // Get the list of all the devices.
         List<Device> devices = Devices.getInstance().getDevices();
+        // Create the table model with the list of devices.
         DefaultTableModel model = DeviceTableModel.defaultTableModel(devices);
-        
+        // Update the table with the devices model.
         removeDeviceTable.setModel(model);
     }
 
@@ -88,22 +88,43 @@ public class RemoveDevicePanel extends javax.swing.JPanel {
 
         add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 380, 240));
     }// </editor-fold>//GEN-END:initComponents
+    
+    /**
+     * Helper to get the smart home security frame. 
+     * @return the SmartHomeSecurityFrame of this component.
+     */
     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
         return (SmartHomeSecurityFrame) SwingUtilities.getWindowAncestor(this);
     }
+    
+    /**
+     * Redirects to the smart home security page when cancel button is pressed.
+     * @param evt - The button click action event.
+     */
     private void cancelRemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelRemoveButtonActionPerformed
-        // TODO add your handling code here:
+        // Navigate back to the main panel when cancel is pressed.
         getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
     }//GEN-LAST:event_cancelRemoveButtonActionPerformed
 
+    /**
+     * The remove button action. 
+     * @param evt - The button click action event. 
+     */
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-
+        // Get the selected index in the table view.
         int selectedIndex = removeDeviceTable.getSelectedRow();
+        
+        // Validate the selected index.
         if (selectedIndex >= 0) {
+            // Get the device at the selected index.
             Device device = Devices.getInstance().getDevices().get(selectedIndex);
+            // Remove the device from the list of devices.
             Devices.getInstance().removeDevice(device);
+            // Disconnect the device connection.
             DeviceSocketManager.getInstance().disconnectDevice(device);            
+            // Notify the user that the device has been successfully removed.
             JOptionPane.showMessageDialog(this, "Device removed");
+            // Navigate to the main view panel.
             getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
         }
     }//GEN-LAST:event_removeButtonActionPerformed

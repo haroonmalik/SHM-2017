@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package smart.home.security.view;
 
 import java.awt.BorderLayout;
@@ -14,52 +9,97 @@ import smart.home.security.utilities.DeviceManager;
 import smart.home.security.utilities.DeviceSocketManager;
 
 /**
- *
- * @author chana
+ * The starting point of the application. The frame that hosts all the application
+ * work flows and view.
+ * @author archana
  */
 public class SmartHomeSecurityFrame extends javax.swing.JFrame {
 
+    /**
+     * The singleton instance of the frame.
+     */
     private static SmartHomeSecurityFrame frame;
+    
+    /**
+     * The current component visible on the frame.
+     */
     private static Component currentComponent;
     
     /**
-     * Creates new form SmartHomeSecurityFrame
+     * The constructor to create the smart home security frame.
      */
     public SmartHomeSecurityFrame() {
+        // Initialize the component that are contained in the frame.
         initComponents();
+        // Set the frame layout to be a Border Layout.
         setLayout(new BorderLayout());
+        // Pack the frame content.
         pack();
+        // Initialize by showing the main panel.
         showMainPanel();
+        // Disallow the frame to be resized.
         setResizable(false);       
     }
 
+    /**
+     * The smart home security frame singleton instance.
+     * @return the SmartHomeSecurityFrame instance.
+     */
     public static SmartHomeSecurityFrame getInstance() {
+        // Initialize the frame it has not been created.
         if (frame == null) {
             frame = new SmartHomeSecurityFrame();
         }
+        
+        // Return the frame.
         return frame;
     }
     
+    /**
+     * Allow the given component to replace the main content area.
+     * @param component - The Component to replace the main content area.
+     */
     public void replaceFramePanel(Component component) {
+        // Hold a reference to the current component.
         currentComponent = component;
+        // Refresh the view to display the content.
         refresh();        
     }
     
+    /**
+     * Refreshes the frame.
+     */
     public void refresh() {
+        // Remove all the components from the content pane.
         getContentPane().removeAll();        
+        // Add the current component to the content pane.
         add(componentPanel(currentComponent));
+        // Repaint the content pane.
         getContentPane().repaint();
+        // Pack the frame to fit its content.
         pack();        
     }
     
+    /**
+     * Helper to add the component panel to the content pane. Adds the notification
+     * banner if there are unread notifications.
+     * @param component - The Component to replace the main content area.
+     * @return 
+     */
     private JPanel componentPanel(Component component) {
+        // Create a container panel.
         JPanel container = new JPanel();
+        // Set the layout of the container panel to a box layout.
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        // Add the component to the continer panel.
         container.add(component);
+        // Check if there are unread notifications.
         if (Notifications.getInstance().UnreadNotifications()) {
+            // Add the notifications banner to the container panel.
             container.add(new NotificationBanner());   
         }
         
+        // Return the container.
         return container;
     }
 
@@ -110,10 +150,11 @@ public class SmartHomeSecurityFrame extends javax.swing.JFrame {
         DeviceSocketManager.getInstance().connectDevices();
         Runtime.getRuntime().addShutdownHook(DeviceSocketManager.getInstance());
 
-        /* Create and display the form */
+        // Create and display the form
         java.awt.EventQueue.invokeLater(new Runnable() {
-
+            // Create and display the smart home security frame.
             public void run() {
+                // Initialize the frame and mark it as visible.
                 SmartHomeSecurityFrame.getInstance().setVisible(true);
             }
         });

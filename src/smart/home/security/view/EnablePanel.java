@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package smart.home.security.view;
 
 import java.util.List;
@@ -15,20 +10,22 @@ import smart.home.security.utilities.DeviceSocketManager;
 import smart.home.security.utilities.DeviceTableModel;
 
 /**
- *
- * @author chana
+ * Shows the list of disabled device that can be enabled.
+ * @author archana
  */
 public class EnablePanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form EnablePanel
+     * The constructor that creates the enable panel.
      */
     public EnablePanel() {
+        // Initialize all the components.
         initComponents();
-        
+        // Get the list of disabled devices.
         List<Device> disabledDevices = Devices.getInstance().getDisabledDevices();
+        // Create the default table.
         DefaultTableModel model = DeviceTableModel.defaultTableModel(disabledDevices);
-        
+        // Update the table model.
         enableDeviceTable.setModel(model);
     }
     /**
@@ -98,20 +95,42 @@ public class EnablePanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * The cancel button action. Navigate back to the main view.
+     * @param evt - The button action event.
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    /**
+     * The enable button action. When clicked on enable button remove the 
+     * device from enable panel and show it in disable panel.
+     * @param evt - The button action event.
+     */
     private void enableButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enableButtonActionPerformed
+        // Get the selected index from the table.
         int selectedIndex = enableDeviceTable.getSelectedRow();
+        
+        // Validate the selected index.
         if (selectedIndex >= 0) {
+            // Get the disabled device at the selected index row.
             Device device = Devices.getInstance().getDisabledDevices().get(selectedIndex);
+            // Disable the device.
             Devices.getInstance().enableDevice(device);
+            // Send the message to the server.
             DeviceSocketManager.getInstance().sendDeviceMessage(device);
+            // Alert the user that the device has been enabled.
             JOptionPane.showMessageDialog(this, "Device enable");
+            // Navigate back to the main view.
             getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
         }
     }//GEN-LAST:event_enableButtonActionPerformed
+    
+    /**
+     * Helper to get the smart home security frame. 
+     * @return the SmartHomeSecurityFrame of this component.
+     */
     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
         return (SmartHomeSecurityFrame) SwingUtilities.getWindowAncestor(this);
     }

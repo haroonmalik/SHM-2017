@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package smart.home.security.view;
 
 import java.util.List;
@@ -12,25 +7,39 @@ import smart.home.security.model.Notifications;
 import smart.home.security.utilities.NotificationsModel;
 
 /**
- *
- * @author chana
+ * Shows the notifications view with its details.
+ * @author archana
  */
 public class NotificationsPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form OpenDevicesPanel
+     * The constructor to create the notifications view.
      */
     public NotificationsPanel() {
+        // Initialize the components of the notifications panel.
         initComponents();
+        
+        // Update the notifications table model.
         updateTableModel();
     }
-     private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
+    
+    /**
+     * Helper to get the smart home security frame. 
+     * @return the SmartHomeSecurityFrame of this component.
+     */
+    private SmartHomeSecurityFrame getSmartHomeSecurityFrame() {
         return SmartHomeSecurityFrame.getInstance();
     }
+    
+    /**
+     * Update the table model based on the notifications.
+     */
     private void updateTableModel() {
+        // Get all the notifications.
         List<Notification> notifications = Notifications.getInstance().getNotifications();
+        // Create the table model with the notifications.
         DefaultTableModel model = NotificationsModel.defaultTableModel(notifications);
-        
+        // Set the model on the table.
         notificationsTable.setModel(model);
     }
 
@@ -112,24 +121,49 @@ public class NotificationsPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * The action to perform when the clear button is pressed. Remove the notification
+     * from the selected index when clicked.
+     * @param evt - The button action event.
+     */
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        // Get the selected index in the table view.
         int selectedIndex = notificationsTable.getSelectedRow();
+        // Validate the selected index.
         if (selectedIndex >= 0) {
+            // Remove the notification from the selected index.
             Notifications.getInstance().removeNotification(selectedIndex);            
         }
-        
+        // Refresh the table view model.
         updateTableModel();
+        
+        // Repaint the table view.
         notificationsTable.repaint();
     }//GEN-LAST:event_clearButtonActionPerformed
 
+    /**
+     * The action to perform when the clear all button is pressed. Remove all
+     * the notifications from the list.
+     * @param evt - The button action event.
+     */
     private void clearAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearAllButtonActionPerformed
+        // Remove the notifications from the model.
         Notifications.getInstance().removeNotifications();
+        // Update the table view model.
         updateTableModel();
+        // Repaint the table view panel.
         notificationsTable.repaint();
     }//GEN-LAST:event_clearAllButtonActionPerformed
 
+    /**
+     * The action to perform when the back button is pressed. Navigates back to
+     * the main view.
+     * @param evt - The button action event.
+     */
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        // Mark that the notifications have been read.
         Notifications.getInstance().markNotificationsAsRead();
+        // Navigate to the main view panel.
         getSmartHomeSecurityFrame().replaceFramePanel(new MainPanel());
     }//GEN-LAST:event_backButtonActionPerformed
 
